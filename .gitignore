@@ -1,4 +1,5 @@
 MeMiniuts/.env
-MeMiniuts/uploads
+MeMiniuts/uploaded_files
 MeMiniuts/Temp
-MeMiniuts/src/__pycache__
+*/*/*/__pycache__
+*/*/__pycache__
