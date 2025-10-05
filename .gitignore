@@ -3,3 +3,11 @@ MeMiniuts/uploaded_files
 MeMiniuts/Temp
 */*/*/__pycache__
 */*/__pycache__
+*/build/bin
+*/node_modules
+*/frontend/dist
+MeMiniuts
+# go-ide
+.gitignore
+MeMiniuts/src/utils/handlFile.py
+MeMiniuts/requirements.txt

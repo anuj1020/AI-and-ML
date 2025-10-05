@@ -16,6 +16,7 @@ def save_files(uploaded_files):
 
 # Function to extract and return content from uploaded files
 def getContentFromUploadedFiles(file_name):
+    contents = ""
     path = os.getcwd()
     file = path + "/uploaded_files/"+file_name
     
@@ -30,26 +31,37 @@ def getContentFromUploadedFiles(file_name):
 
     elif file_name.endswith('.docx'):
         from docx import Document
-        
-        doc = Document(file_name)
+
+        doc = Document(file)
 
         # Extract text
         for para in doc.paragraphs:
-            print(para.text)
+            text += para.text
 
         # Extract tables
         for table in doc.tables:
             for row in table.rows:
                 row_data = [cell.text.strip() for cell in row.cells]
-                print(row_data)
+                text+= row_data
+        contents = text
 
     elif file_name.endswith('.doc'):
-        import textract
-        text = textract.process(file).decode('utf-8')
+        import win32com.client
+
+        word = win32com.client.Dispatch("Word.Application")
+        doc = word.Documents.Open(file_name)
+
+        # Extract plain text
+        text = doc.Content.Text
+
+        # Extract tables
+        for table in doc.Tables:
+            for row in table.Rows:
+                text.join([cell.Range.Text.strip() for cell in row.Cells])
+
+        doc.Close(False)
+        word.Quit()
         contents = text
-    
-    for content in contents:
-        print(content)
 
     return contents
     
